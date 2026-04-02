@@ -31,19 +31,24 @@ Signals are scored and combined — a bipartisan cluster of committee-relevant l
 
 The system was backtested against **46,154 congressional purchase signals** from July 2012 through January 2026.
 
-| Holding Period | Avg Return | Median Return | Win Rate |
-|---------------|------------|---------------|----------|
+| Holding Period | Avg Raw Return | Median Return | Win Rate |
+|---------------|----------------|---------------|----------|
 | 5 days | +0.39% | +0.41% | 54.9% |
 | 10 days | +0.67% | +0.73% | 56.2% |
 | 20 days | +1.24% | +1.31% | 57.6% |
 | 40 days | +2.41% | +2.16% | 58.5% |
 | 60 days | +3.76% | +3.32% | 60.5% |
 
-**Key findings:**
-- 297 unique politicians tracked across 2,713 tickers
-- Party split: 21,857 Republican / 24,245 Democrat trades
-- Congressional purchases show consistent positive returns across all holding windows
-- Win rates improve with longer holding periods, suggesting informed positioning rather than noise
+**Research Conclusion:**
+After controlling for SPY benchmark performance over matching holding periods, congressional purchases as a whole showed **no statistically significant alpha**. The raw returns above largely reflect broad market drift over a primarily bull-market sample period (2012-2026).
+
+Subset analysis identified two weakly positive confirming signals:
+- **Large trades** ($250K-$500K bracket): modest positive edge when combined with other signals
+- **Multi-politician clusters** (3+ members, same ticker, 14 days): weak but consistent confirmer
+
+This scanner is used as a **supplementary signal enhancer** within a multi-signal framework, not as a standalone trading strategy. It monitors congressional activity for context and cross-signal enrichment — not direct trade generation.
+
+**Dataset:** 297 unique politicians tracked across 2,713 tickers. Party split: 21,857 Republican / 24,245 Democrat trades.
 
 ---
 
@@ -68,21 +73,10 @@ check_alerts.py           # Manual alert check utility
 ## Setup
 
 ```bash
-# Clone the repo
 git clone https://github.com/KPH3802/congress-trade-tracker.git
 cd congress-trade-tracker
-
-# Install dependencies
 pip install -r requirements.txt
-
-# Configure credentials
 cp config_example.py config.py
-# Edit config.py with your email and API key
-
-# Set your FMP API key
-export FMP_API_KEY="your_key_here"
-
-# Run the tracker
 python congress_main.py
 ```
 
@@ -100,17 +94,6 @@ The tracker sends a formatted HTML email containing:
 - **Database statistics** — total transactions, party breakdown, date coverage
 - **Prioritized alerts** — HIGH and MEDIUM signals with full context
 - **Alert breakdown** — counts by detection type
-
-Subject line adapts to content: quiet days get a status update, active days lead with the alert count.
-
----
-
-## Built With
-
-- **Python** — core language
-- **SQLite** — local transaction database
-- **FMP API** — congressional disclosure data source
-- **SMTP/Gmail** — automated email delivery
 
 ---
 
